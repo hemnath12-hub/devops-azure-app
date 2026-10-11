@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: secure-document-vault
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+server:
+  port: 8080
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# Storage Engine Configuration
+azure:
+  storage:
+    enabled: ${AZURE_STORAGE_ENABLED:false}
+    connection-string: ${AZURE_STORAGE_CONNECTION_STRING:}
+    container-name: ${AZURE_STORAGE_CONTAINER_NAME:documents}
+
+app:
+  storage:
+    local-dir: ${LOCAL_STORAGE_DIR:./vault-storage}

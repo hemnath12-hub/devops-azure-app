@@ -1,0 +1,15 @@
+.git
+.gitignore
+.gradle
+build/
+bin/
+out/
+.idea
+*.iml
+.vscode
+*.log
+vault-storage/
+terraform/
+k8s/
+scripts/
+README.md

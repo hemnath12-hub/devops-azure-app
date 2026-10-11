@@ -1,0 +1,47 @@
+services:
+  # ==============================================================
+  # Secure Asset & Document Vault Service
+  # ==============================================================
+  vault-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devops-vault-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - AZURE_STORAGE_ENABLED=true
+      # Connection string targeting the local Azurite emulator
+      - AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite-storage:10000/devstoreaccount1;
+      - AZURE_STORAGE_CONTAINER_NAME=documents
+    depends_on:
+      - azurite-storage
+    restart: unless-stopped
+    networks:
+      - vault-net
+
+  # ==============================================================
+  # Microsoft Azurite - Official Local Azure Storage Emulator
+  # ==============================================================
+  azurite-storage:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    container_name: devops-azurite-storage
+    ports:
+      - "10000:10000" # Blob service
+      - "10001:10001" # Queue service
+      - "10002:10002" # Table service
+    command: "azurite-blob --blobHost 0.0.0.0 --blobPort 10000 --loose"
+    volumes:
+      - azurite-data:/data
+    restart: unless-stopped
+    networks:
+      - vault-net
+
+volumes:
+  azurite-data:
+    driver: local
+
+networks:
+  vault-net:
+    driver: bridge

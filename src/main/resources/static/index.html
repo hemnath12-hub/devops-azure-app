@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azure Document Vault | Enterprise DevOps Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">Secure Asset & Document Vault</h1>
+        <span class="brand-subtitle">Cloud-Native Storage & DevOps Telemetry</span>
+      </div>
+    </div>
+
+    <!-- DevOps Pipeline Badges -->
+    <div class="devops-badges">
+      <div class="badge-item" id="badge-build">
+        <span class="badge-dot pulse-green"></span>
+        <span class="badge-label">Jenkins:</span>
+        <span class="badge-value" id="val-build-num">Build #104</span>
+      </div>
+      <div class="badge-item" id="badge-git">
+        <span class="badge-label">Git:</span>
+        <code class="badge-code" id="val-git-sha">a8f23bc</code>
+      </div>
+      <div class="badge-item" id="badge-env">
+        <span class="badge-label">Env:</span>
+        <span class="badge-pill" id="val-env">Staging</span>
+      </div>
+      <div class="badge-item" id="badge-storage">
+        <span class="badge-label">Provider:</span>
+        <span class="badge-pill azure-pill" id="val-storage-provider">Azure Blob</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Metrics & Telemetry Grid -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Total Documents</span>
+          <div class="stat-icon icon-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          </div>
+        </div>
+        <div class="stat-value" id="stat-total-docs">0</div>
+        <div class="stat-footer">Stored in vault</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Storage Footprint</span>
+          <div class="stat-icon icon-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          </div>
+        </div>
+        <div class="stat-value" id="stat-total-size">0.0 B</div>
+        <div class="stat-footer" id="stat-storage-loc">Location: Initializing...</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Security & Integrity</span>
+          <div class="stat-icon icon-emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+        </div>
+        <div class="stat-value text-emerald">100% Verified</div>
+        <div class="stat-footer">SHA-256 Checksum on ingestion</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-title">Kubernetes Health</span>
+          <div class="stat-icon icon-cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><activity><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></activity></svg>
+          </div>
+        </div>
+        <div class="stat-value" id="stat-probe-status">UP</div>
+        <div class="stat-footer" id="stat-uptime">Uptime: 0s</div>
+      </div>
+    </section>
+
+    <!-- Upload & Actions Area -->
+    <section class="action-section">
+      <div class="upload-card">
+        <div class="card-title-bar">
+          <h3>Upload Secure Asset</h3>
+          <span class="card-hint">Multi-part encrypted stream</span>
+        </div>
+        
+        <form id="upload-form" class="upload-dropzone">
+          <input type="file" id="file-input" class="file-input-hidden" required>
+          <div class="dropzone-content" id="dropzone-area">
+            <div class="upload-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            </div>
+            <p class="dropzone-main-text">Drag and drop document here, or <span class="highlight-link">browse files</span></p>
+            <p class="dropzone-sub-text" id="selected-file-label">Supports PDF, DOCX, Images, Configs up to 50MB</p>
+          </div>
+
+          <div class="upload-controls">
+            <div class="tag-input-group">
+              <label for="tags-input">Metadata Tags (comma separated):</label>
+              <input type="text" id="tags-input" placeholder="e.g. finance, quarterly-report, confidential" class="text-input">
+            </div>
+            <button type="submit" id="btn-upload" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              Upload to Vault
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Quick DevOps Controls -->
+      <div class="devops-panel-card">
+        <div class="card-title-bar">
+          <h3>DevOps Architecture Controls</h3>
+        </div>
+        <div class="telemetry-info">
+          <div class="telemetry-row">
+            <span class="tel-label">CI Engine:</span>
+            <span class="tel-value">Jenkins Declarative Pipeline</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="tel-label">Build Tool:</span>
+            <span class="tel-value">Gradle 8.7 (Java 17)</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="tel-label">Registry:</span>
+            <span class="tel-value">Azure Container Registry (ACR)</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="tel-label">Cluster:</span>
+            <span class="tel-value">Azure Kubernetes Service (AKS)</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="tel-label">IaC Engine:</span>
+            <span class="tel-value">HashiCorp Terraform</span>
+          </div>
+        </div>
+
+        <div class="quick-links">
+          <a href="/actuator/health" target="_blank" class="devops-link">
+            <span>Actuator Health</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+          <a href="/actuator/prometheus" target="_blank" class="devops-link">
+            <span>Prometheus Metrics</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documents Explorer Table / Card View -->
+    <section class="explorer-section">
+      <div class="explorer-header">
+        <div>
+          <h2>Vault Repository</h2>
+          <p class="section-desc">Audited assets with SHA-256 fingerprint verification</p>
+        </div>
+        <div class="filter-controls">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Search by name or ID...">
+          </div>
+          <button id="btn-refresh" class="btn btn-secondary">Refresh</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="vault-table">
+          <thead>
+            <tr>
+              <th>Document</th>
+              <th>SHA-256 Fingerprint</th>
+              <th>Size</th>
+              <th>Tags</th>
+              <th>Storage Engine</th>
+              <th>Uploaded</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="documents-tbody">
+            <tr class="empty-row">
+              <td colspan="7">Loading documents...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Secure Asset & Document Vault • Deployed via <strong>Jenkins + Gradle + Azure</strong></p>
+  </footer>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

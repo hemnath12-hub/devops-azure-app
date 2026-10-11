@@ -1,0 +1,9 @@
+azure_region         = "eastus"
+resource_group_name  = "devops-vault-rg"
+environment          = "staging"
+storage_account_name = "devopsvaultstore01"
+storage_container_name = "documents"
+acr_name             = "devopsvaultacr"
+aks_cluster_name     = "devops-vault-aks"
+aks_node_count       = 2
+aks_vm_size          = "Standard_B2s"
